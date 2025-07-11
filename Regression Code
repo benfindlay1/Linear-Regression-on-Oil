@@ -1,0 +1,34 @@
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+
+file_path = r"C:\Users\benfi\Documents\Python_files\Oil_Data.xlsx"
+df = pd.read_excel(file_path)
+
+
+df = df.dropna()
+
+
+X = df[['Weekly U.S crude production']]
+y = df['U.S ending stock Petroleum']     
+
+
+model = LinearRegression()
+model.fit(X, y)
+
+
+print("Intercept:", model.intercept_)
+print("Slope:", model.coef_[0])
+print("R-squared:", model.score(X, y))
+
+
+plt.figure(figsize=(10,6))
+plt.scatter(X, y, color='blue', label='Data points')
+plt.plot(X, model.predict(X), color='red', label='Regression line')
+plt.xlabel("Weekly U.S crude production")
+plt.ylabel("U.S ending stock Petroleum")
+plt.title("Simple Linear Regression")
+plt.legend()
+plt.grid(True)
+plt.show()
